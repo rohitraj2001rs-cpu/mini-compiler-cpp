@@ -1,0 +1,58 @@
+#ifndef OPTIMIZER_H
+#define OPTIMIZER_H
+
+#include <memory>
+#include <string>
+#include <cctype>
+
+using namespace std;
+
+struct ASTNode;
+
+class Optimizer {
+
+private:
+
+    bool isNumber(const string& value) {
+
+        if (value.empty())
+            return false;
+
+        for (char c : value) {
+
+            if (!isdigit(c))
+                return false;
+        }
+
+        return true;
+    }
+
+    int calculate(
+        int left,
+        int right,
+        const string& op
+    ) {
+
+        if (op == "+")
+            return left + right;
+
+        if (op == "-")
+            return left - right;
+
+        if (op == "*")
+            return left * right;
+
+        if (op == "/" && right != 0)
+            return left / right;
+
+        return 0;
+    }
+
+public:
+
+    shared_ptr<ASTNode> optimize(
+        shared_ptr<ASTNode> node
+    );
+};
+
+#endif
